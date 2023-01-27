@@ -87,6 +87,37 @@ const handleSubmit = async (e) => {
 
   loader(messageDiv);
 
+  //fetch data from server -> openai api bot's response
+
+  const response = await fetch('http://localhost:5000',
+  {
+    method:"POST",
+    headers: {
+      'content-type' : 'application/json'
+    },
+    body: JSON.stringify({
+      promt: data.get('prompt')
+    })
+  });
+
+  clearInterval(loadInterval);
+  messageDiv.innerHTML = "";
+
+  if(response.ok)
+  {
+    const data = await response.json();
+    const parseData = data.bot.trim();
+
+    typeText(messageDiv, parsedData);
+  }
+  else
+  {
+    const err = await response.text();
+
+    messageDiv.innerHTML = "Something went wrong";
+    
+    alert(err);
+  }
 }
 
 form.addEventListener('submit', handleSubmit);
