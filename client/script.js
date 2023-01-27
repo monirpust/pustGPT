@@ -89,7 +89,7 @@ const handleSubmit = async (e) => {
 
   //fetch data from server -> openai api bot's response
 
-  const response = await fetch('http://localhost:5000',
+  const response = await fetch('https://pustgpt.onrender.com',
   {
     method:"POST",
     headers: {
